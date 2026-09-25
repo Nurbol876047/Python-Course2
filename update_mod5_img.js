@@ -1,0 +1,27 @@
+const fs = require('fs');
+const file = 'src/data/python_omirde.js';
+let data = fs.readFileSync(file, 'utf8');
+
+let code = data.replace('export const MODULES =', 'const MODULES =');
+code += '\nmodule.exports = MODULES;';
+fs.writeFileSync('temp_mod5_img.js', code);
+const MODULES = require('./temp_mod5_img.js');
+
+const imgStyleCover = 'style="width:100%; height:100%; object-fit:cover; border-radius: 8px 8px 0 0;"';
+const imgStyleTheory = 'style="width:100%; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"';
+
+let m5 = MODULES.find(m => m.id === 5);
+if(m5) {
+    m5.heroSvg = `<img src="/images/mod5.png" alt="Қалдықтарды сұрыптау" ${imgStyleCover} />`;
+    
+    // Remove the old Unsplash image from theory
+    m5.theory = m5.theory.filter(p => !p.includes('unsplash.com'));
+    
+    // Unshift the new image
+    m5.theory.unshift(`<img src="/images/mod5.png" alt="Қалдықтарды сұрыптау" ${imgStyleTheory} />`);
+}
+
+let finalOutput = "export const MODULES = " + JSON.stringify(MODULES, null, 4) + ";\n";
+fs.writeFileSync(file, finalOutput);
+fs.unlinkSync('temp_mod5_img.js');
+console.log("Module 5 cover and theory updated with user-provided image.");
