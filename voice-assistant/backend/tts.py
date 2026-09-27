@@ -23,12 +23,28 @@ class TTSError(Exception):
     pass
 
 
+import urllib.request
+
 @lru_cache(maxsize=1)
 def get_voice() -> PiperVoice:
     model_path = MODELS_DIR / f"{settings.piper_voice}.onnx"
     config_path = MODELS_DIR / f"{settings.piper_voice}.onnx.json"
-    if not model_path.exists():
-        raise TTSError(f"Piper дауыс файлы табылмады: {model_path}")
+    
+    if not model_path.exists() or not config_path.exists():
+        logger.info("Piper дауыс файлы табылмады, жүктелуде: %s", settings.piper_voice)
+        MODELS_DIR.mkdir(parents=True, exist_ok=True)
+        # Жүктеп алу сілтемелері
+        base_url = "https://huggingface.co/rhasspy/piper-voices/resolve/main/kk/kk_KZ/issai/high/"
+        if settings.piper_voice == "ru_RU-irina-medium":
+            base_url = "https://huggingface.co/rhasspy/piper-voices/resolve/main/ru/ru_RU/irina/medium/"
+            
+        try:
+            urllib.request.urlretrieve(base_url + f"{settings.piper_voice}.onnx", model_path)
+            urllib.request.urlretrieve(base_url + f"{settings.piper_voice}.onnx.json", config_path)
+            logger.info("Piper дауыс файлы сәтті жүктелді!")
+        except Exception as e:
+            raise TTSError(f"Piper моделін жүктеу қатесі: {e}")
+            
     logger.info("Piper дауысы жүктелуде: %s", settings.piper_voice)
     voice = PiperVoice.load(model_path, config_path)
     logger.info("Piper дауысы дайын")
