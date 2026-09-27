@@ -6,11 +6,7 @@ export default function Home() {
       <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1a202c', marginBottom: '1.5rem' }}>
         Қазақша бағдарламалау сабақтары
       </h1>
-      <p style={{ color: '#4a5568', fontSize: '1.1rem', marginBottom: '2rem' }}>
-        Next.js платформасына қош келдіңіз. Төмендегі курстардың бірін таңдаңыз:
-      </p>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.5rem', marginTop: '2rem' }}>
         <Link href="/python-omirde" style={{
           display: 'block', padding: '2rem', borderRadius: '12px', background: 'linear-gradient(135deg, #f6f8fd 0%, #f1f5f9 100%)',
           textDecoration: 'none', color: 'inherit', border: '1px solid #e2e8f0', transition: 'transform 0.2s, box-shadow 0.2s',
