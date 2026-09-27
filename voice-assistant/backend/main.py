@@ -30,14 +30,23 @@ async def lifespan(app: FastAPI):
     yield
 
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(title="Python дауыстық көмекші", lifespan=lifespan)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # В продакшене лучше указать точный URL вашего Next.js сайта
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.middleware("http")
 async def no_cache_frontend(request, call_next):
     # index.html/app.js/style.css браузерде ескіріп қалмас үшін — код
     # өзгерсе, пайдаланушы бетті жаңартқанда бірден жаңа нұсқасын көреді.
-    # /static (видео, аватар) және /media файлдары үлкен әрі өзгермейді,
+    # /static (видео, аватар) и /media файлдары үлкен әрі өзгермейді,
     # сол себепті оларға бұл ереже қолданылмайды.
     response = await call_next(request)
     if not request.url.path.startswith(("/static/", "/media/", "/api/")):
