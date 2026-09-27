@@ -1,0 +1,20 @@
+{
+  "image_width": 1084,
+  "image_height": 1600,
+  "anchor_x": 428,
+  "anchor_y": 520,
+  "variants": {
+    "closed": {
+      "width": 249,
+      "height": 144
+    },
+    "mid": {
+      "width": 249,
+      "height": 154
+    },
+    "open": {
+      "width": 249,
+      "height": 164
+    }
+  }
+}
