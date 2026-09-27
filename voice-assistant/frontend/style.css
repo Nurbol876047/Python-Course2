@@ -1,0 +1,450 @@
+:root {
+  --color-bg: #f3f4f6;
+  --color-surface: #ffffff;
+  --color-border: #e2e5ea;
+  --color-text: #1f2430;
+  --color-text-muted: #6b7280;
+  --color-accent: #1a56db;
+  --color-accent-soft: #e8effd;
+  --color-user-bubble: #1a56db;
+  --color-assistant-bubble: #f1f3f6;
+  --color-code-bg: #1e2433;
+  --color-code-text: #e5e9f0;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 12px rgba(16, 24, 40, 0.06);
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-header__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--color-accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.site-header__title {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.site-header__nav-item {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+}
+
+.site-header__nav-item--active {
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+  font-weight: 600;
+}
+
+.layout {
+  max-width: 1150px;
+  margin: 32px auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.teacher-panel {
+  position: sticky;
+  top: 24px;
+}
+
+.teacher-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 20px;
+  text-align: center;
+}
+
+/* Фото/бейне слоты бірдей өлшемде болуы үшін: кейін <img> орнына <video>
+   осы класспен ауыстырылады, макет өзгермейді. */
+.teacher-card__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #e2e8f0 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64"><circle cx="12" cy="8" r="4" fill="%2394a3b8"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="%2394a3b8"/></svg>') center 38% / 72px no-repeat;
+  margin-bottom: 14px;
+}
+
+.teacher-card__media::after {
+  content: "Мұғалім фотосы/видеосы осында шығады";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  font-size: 11px;
+  color: #64748b;
+  padding: 0 12px;
+}
+
+.teacher-card__media-img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.teacher-card__media-video {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.teacher-card__media-video.is-visible {
+  opacity: 1;
+  z-index: 2;
+}
+
+.teacher-card__special-video.is-visible {
+  z-index: 3;
+}
+
+.teacher-card__media-ring {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  border-radius: var(--radius-md);
+  border: 3px solid var(--color-accent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.teacher-card__media.is-listening .teacher-card__media-ring {
+  opacity: 1;
+  animation: pulse-ring 1.4s ease-out infinite;
+}
+
+.teacher-card__media.is-thinking .teacher-card__media-ring {
+  opacity: 1;
+  border-color: #d97706;
+}
+
+.teacher-card__media.is-speaking .teacher-card__media-ring {
+  opacity: 1;
+  border-color: #16a34a;
+  animation: pulse-ring 0.9s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(26, 86, 219, 0.35); }
+  70% { box-shadow: 0 0 0 10px rgba(26, 86, 219, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(26, 86, 219, 0); }
+}
+
+.teacher-card__name {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.teacher-card__role {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.teacher-card__state {
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+  border-radius: 999px;
+  padding: 6px 14px;
+  display: inline-block;
+}
+
+.chat-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  min-height: 620px;
+}
+
+.chat-panel__header {
+  padding: 20px 24px 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.chat-panel__title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.chat-panel__subtitle {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.chat-log {
+  flex: 1;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  max-width: 82%;
+}
+
+.chat-message--assistant {
+  align-self: flex-start;
+}
+
+.chat-message--user {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.chat-message__author {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-bottom: 4px;
+}
+
+.chat-message__bubble {
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.chat-message__bubble p {
+  margin: 0 0 8px;
+}
+
+.chat-message__bubble p:last-child {
+  margin-bottom: 0;
+}
+
+.chat-message--assistant .chat-message__bubble {
+  background: var(--color-assistant-bubble);
+  color: var(--color-text);
+  border-bottom-left-radius: 2px;
+}
+
+.chat-message--user .chat-message__bubble {
+  background: var(--color-user-bubble);
+  color: #fff;
+  border-bottom-right-radius: 2px;
+}
+
+.code-block {
+  margin: 4px 0 0;
+  background: var(--color-code-bg);
+  color: var(--color-code-text);
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.chat-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 24px;
+  border-top: 1px solid var(--color-border);
+}
+
+.mic-button {
+  flex: 0 0 auto;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(26, 86, 219, 0.35);
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.mic-button:hover {
+  background: #1544ad;
+}
+
+.mic-button:active {
+  transform: scale(0.96);
+}
+
+.mic-button__icon-stop {
+  display: none;
+}
+
+.mic-button.is-recording {
+  background: #dc2626;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+}
+
+.mic-button.is-recording .mic-button__icon-mic {
+  display: none;
+}
+
+.mic-button.is-recording .mic-button__icon-stop {
+  display: block;
+}
+
+.mic-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mic-timer {
+  position: absolute;
+  left: 50%;
+  top: -22px;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: 600;
+  color: #dc2626;
+  background: #fee2e2;
+  border-radius: 999px;
+  padding: 2px 10px;
+  white-space: nowrap;
+}
+
+.chat-message--system .chat-message__bubble {
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: var(--radius-md);
+}
+
+.chat-input__form {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+
+.chat-input__field {
+  flex: 1;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+}
+
+.chat-input__field:focus {
+  border-color: var(--color-accent);
+}
+
+.chat-input__send {
+  flex: 0 0 auto;
+  background: var(--color-surface);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chat-input__send:hover {
+  background: var(--color-accent-soft);
+}
+
+.chat-input__hint {
+  padding: 0 24px 16px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+    margin: 16px auto;
+    padding: 0 16px;
+  }
+
+  .teacher-panel {
+    position: static;
+  }
+
+  .teacher-card__media {
+    aspect-ratio: 3 / 4;
+  }
+
+  .chat-panel {
+    min-height: 0;
+  }
+
+  .chat-log {
+    max-height: 55vh;
+  }
+}

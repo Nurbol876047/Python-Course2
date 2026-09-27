@@ -6,6 +6,15 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8420"],
       "port": 8420
+    },
+    {
+      "name": "app",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-c",
+        "trap 'kill 0' EXIT; voice-assistant/.venv/bin/python3 -m uvicorn backend.main:app --reload --port 8422 --app-dir voice-assistant & npm run dev & wait"
+      ],
+      "port": 3000
     }
   ]
 }
