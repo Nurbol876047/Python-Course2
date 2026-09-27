@@ -32,6 +32,17 @@ export default function Home() {
             Сұрағыңызды дауыспен қойыңыз — Python мұғалімі дауыспен және жазбаша жауап береді.
           </p>
         </a>
+
+        <a href="https://qazaq-quest-uly-dala.soriano17.chatgpt.site/" target="_blank" rel="noopener noreferrer" style={{
+          display: 'block', padding: '2rem', borderRadius: '12px', background: 'linear-gradient(135deg, #f6f8fd 0%, #f1f5f9 100%)',
+          textDecoration: 'none', color: 'inherit', border: '1px solid #e2e8f0', transition: 'transform 0.2s, box-shadow 0.2s',
+          cursor: 'pointer', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+        }}>
+          <h2 style={{ fontSize: '1.5rem', color: '#2b6cb0', marginBottom: '0.5rem' }}>Сабақтар 📚</h2>
+          <p style={{ color: '#4a5568', fontSize: '0.95rem' }}>
+            Qazaq Quest: Ұлы Дала — интерактивті сабақтар мен тапсырмалар арқылы біліміңізді шыңдаңыз.
+          </p>
+        </a>
       </div>
     </div>
   );
