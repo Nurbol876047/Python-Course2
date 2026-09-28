@@ -19,11 +19,14 @@ STATIC_DIR = BASE_DIR / "static"
 
 # Продакшенде (Render) осы бэкенд бүкіл сайтты (3 модульді басты бет,
 # /python-omirde, /voice-assistant) де раздайды — Next.js static export
-# нәтижесі (`npm run build`, repo түбіріндегі out/). Ол жоқ болса
-# (мыс. локалды `uvicorn backend.main:app` тек ассистентті тексеру үшін
-# іске қосылғанда), өз алдына frontend/ қалдырады.
-NEXT_EXPORT_DIR = BASE_DIR.parent / "out"
-FRONTEND_DIR = NEXT_EXPORT_DIR if NEXT_EXPORT_DIR.is_dir() else BASE_DIR / "frontend"
+# нәтижесі. Render-дегі Python орта Node.js-сіз болғандықтан, `out/`-ты
+# сонда құру мүмкін емес, сондықтан дайын нәтиже git-ке committed түрде
+# сақталады (`npm run build`, содан кейін out/-ты static/ қоспай осы
+# жерге көшіру керек — static/ бұрыннан /static mount арқылы беріледі).
+# Committed site жоқ болса (мыс. локалды `uvicorn backend.main:app` тек
+# ассистентті тексеру үшін іске қосылғанда), өз алдына frontend/ қалдырады.
+SITE_DIR = BASE_DIR / "site"
+FRONTEND_DIR = SITE_DIR if SITE_DIR.is_dir() else BASE_DIR / "frontend"
 
 
 @asynccontextmanager
