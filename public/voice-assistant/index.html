@@ -34,44 +34,31 @@
     <section class="chat-panel">
       <div class="chat-panel__header">
         <h1 class="chat-panel__title">Сөйлесу тарихы</h1>
-        <span class="chat-panel__subtitle">Сұрағыңызды дауыс арқылы немесе жазып қойыңыз</span>
+        <span class="chat-panel__subtitle">Сұрағыңызды жазып қойыңыз</span>
       </div>
 
       <div class="chat-log" id="chatLog">
         <div class="chat-message chat-message--assistant">
           <div class="chat-message__author">Ақназарова Ақмарал Ақназарқызы</div>
-          <div class="chat-message__bubble"><p>Сәлеметсіз бе! Python тілі бойынша сұрағыңызды жазыңыз немесе микрофонды басып айтыңыз — сәйкес бейне осында көрсетіледі.</p></div>
+          <div class="chat-message__bubble"><p>Сәлеметсіз бе! Python тілі бойынша сұрағыңызды жазыңыз — сәйкес бейне осында көрсетіледі.</p></div>
         </div>
       </div>
 
       <div class="chat-input">
-        <div class="mic-row">
-          <button type="button" class="mic-button" id="micButton" aria-pressed="false" aria-label="Жазуды бастау/тоқтату">
-            <svg class="mic-button__icon-mic" viewBox="0 0 24 24" width="26" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z" stroke="currentColor" stroke-width="1.6"/>
-              <path d="M19 11a7 7 0 0 1-14 0M12 18v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-            <svg class="mic-button__icon-stop" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="6" width="12" height="12" rx="2"/>
-            </svg>
-          </button>
-          <span class="mic-timer" id="micTimer" hidden>00:00</span>
-        </div>
         <form class="chat-input__form" id="chatInputForm">
           <input
             type="text"
             class="chat-input__field"
             id="chatTextInput"
-            placeholder="Сұрағыңызды осында жазыңыз (қосымша тәсіл)..."
+            placeholder="Сұрағыңызды осында жазыңыз..."
             autocomplete="off"
           >
           <button type="submit" class="chat-input__send" id="sendButton">Жіберу</button>
         </form>
       </div>
-      <div class="chat-input__hint" id="chatHint">Микрофонды басып сұрағыңызды айтыңыз (макс. 60 секунд)</div>
     </section>
   </main>
 
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>

@@ -2,16 +2,13 @@ import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI, File, HTTPException, UploadFile
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from backend import db
 from backend.config import settings
 from backend.llm import LLMError, ask_llm
-from backend.stt import STTError, get_model, transcribe
-from backend.tts import TTSError, get_voice, synthesize
 from backend.video_library import VIDEO_LIBRARY, validate_video_files
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
@@ -24,8 +21,6 @@ STATIC_DIR = BASE_DIR / "static"
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     db.init_db()
-    get_model()  # Whisper моделін бір рет, старт кезінде жүктейміз
-    get_voice()  # Piper дауысын бір рет, старт кезінде жүктейміз
     validate_video_files()  # VIDEO_LIBRARY-дегі әр жазбаға файл бар-жоғын тексереміз
     yield
 
@@ -59,23 +54,9 @@ class AskRequest(BaseModel):
     session_id: str
 
 
-class TTSRequest(BaseModel):
-    text: str
-
-
 @app.get("/api/health")
 def health_check():
     return {"status": "ok", "gemini_model": settings.gemini_model}
-
-
-@app.post("/api/stt")
-async def speech_to_text(audio: UploadFile = File(...)):
-    raw_audio = await audio.read()
-    try:
-        text = transcribe(raw_audio)
-    except STTError as exc:
-        raise HTTPException(status_code=422, detail={"code": exc.code, "message": exc.message})
-    return {"text": text}
 
 
 @app.post("/api/ask")
@@ -102,15 +83,6 @@ def ask(payload: AskRequest):
         "display": answer.display,
         "video_url": video["url"] if video else None,
     }
-
-
-@app.post("/api/tts")
-def text_to_speech(payload: TTSRequest):
-    try:
-        wav_path = synthesize(payload.text)
-    except TTSError as exc:
-        raise HTTPException(status_code=422, detail={"code": "tts_error", "message": str(exc)})
-    return FileResponse(wav_path, media_type="audio/wav", filename=wav_path.name)
 
 
 app.mount("/media", StaticFiles(directory=BASE_DIR / "media"), name="media")

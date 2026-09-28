@@ -23,11 +23,6 @@ class Settings:
     openai_model: str = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
     gemini_api_keys: tuple[str, ...] = _gemini_api_keys()
     gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
-    whisper_model: str = os.getenv("WHISPER_MODEL", "small")
-    whisper_lang: str = os.getenv("WHISPER_LANG", "kk")
-    piper_voice: str = os.getenv("PIPER_VOICE", "kk_KZ-issai-high")
-    piper_speaker: int = int(os.getenv("PIPER_SPEAKER", "4"))
-    piper_length_scale: float = float(os.getenv("PIPER_LENGTH_SCALE", "1.15"))
 
 
 settings = Settings()

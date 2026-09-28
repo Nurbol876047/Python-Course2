@@ -163,11 +163,6 @@ body {
   transition: opacity 0.2s ease;
 }
 
-.teacher-card__media.is-listening .teacher-card__media-ring {
-  opacity: 1;
-  animation: pulse-ring 1.4s ease-out infinite;
-}
-
 .teacher-card__media.is-thinking .teacher-card__media-ring {
   opacity: 1;
   border-color: #d97706;
@@ -314,68 +309,6 @@ body {
   border-top: 1px solid var(--color-border);
 }
 
-.mic-button {
-  flex: 0 0 auto;
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  border: none;
-  background: var(--color-accent);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 14px rgba(26, 86, 219, 0.35);
-  transition: background 0.15s ease, transform 0.1s ease;
-}
-
-.mic-button:hover {
-  background: #1544ad;
-}
-
-.mic-button:active {
-  transform: scale(0.96);
-}
-
-.mic-button__icon-stop {
-  display: none;
-}
-
-.mic-button.is-recording {
-  background: #dc2626;
-  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
-}
-
-.mic-button.is-recording .mic-button__icon-mic {
-  display: none;
-}
-
-.mic-button.is-recording .mic-button__icon-stop {
-  display: block;
-}
-
-.mic-row {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mic-timer {
-  position: absolute;
-  left: 50%;
-  top: -22px;
-  transform: translateX(-50%);
-  font-size: 12px;
-  font-weight: 600;
-  color: #dc2626;
-  background: #fee2e2;
-  border-radius: 999px;
-  padding: 2px 10px;
-  white-space: nowrap;
-}
-
 .chat-message--system .chat-message__bubble {
   background: #fef3c7;
   color: #92400e;
@@ -416,13 +349,6 @@ body {
 
 .chat-input__send:hover {
   background: var(--color-accent-soft);
-}
-
-.chat-input__hint {
-  padding: 0 24px 16px;
-  font-size: 12px;
-  color: var(--color-text-muted);
-  text-align: center;
 }
 
 @media (max-width: 760px) {
