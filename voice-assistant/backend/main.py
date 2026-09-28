@@ -15,8 +15,15 @@ from backend.video_library import VIDEO_LIBRARY, validate_video_files
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-FRONTEND_DIR = BASE_DIR / "frontend"
 STATIC_DIR = BASE_DIR / "static"
+
+# Продакшенде (Render) осы бэкенд бүкіл сайтты (3 модульді басты бет,
+# /python-omirde, /voice-assistant) де раздайды — Next.js static export
+# нәтижесі (`npm run build`, repo түбіріндегі out/). Ол жоқ болса
+# (мыс. локалды `uvicorn backend.main:app` тек ассистентті тексеру үшін
+# іске қосылғанда), өз алдына frontend/ қалдырады.
+NEXT_EXPORT_DIR = BASE_DIR.parent / "out"
+FRONTEND_DIR = NEXT_EXPORT_DIR if NEXT_EXPORT_DIR.is_dir() else BASE_DIR / "frontend"
 
 
 @asynccontextmanager
