@@ -90,7 +90,7 @@ function stopTimer() {
 async function askAssistant(questionText) {
   setState(STATES.thinking);
   try {
-    const response = await fetch("https://python-course3.onrender.com/api/ask", {
+    const response = await fetch("/api/ask", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: questionText, session_id: sessionId }),
@@ -146,7 +146,7 @@ async function sendAudioForRecognition(blob) {
   formData.append("audio", blob, "recording.webm");
 
   try {
-    const response = await fetch("https://python-course3.onrender.com/api/stt", { method: "POST", body: formData });
+    const response = await fetch("/api/stt", { method: "POST", body: formData });
 
     if (!response.ok) {
       const errorBody = await response.json().catch(() => null);
