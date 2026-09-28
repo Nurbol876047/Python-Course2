@@ -42,10 +42,10 @@ app.add_middleware(
 async def no_cache_frontend(request, call_next):
     # index.html/app.js/style.css браузерде ескіріп қалмас үшін — код
     # өзгерсе, пайдаланушы бетті жаңартқанда бірден жаңа нұсқасын көреді.
-    # /static (видео, аватар) и /media файлдары үлкен әрі өзгермейді,
+    # /static (видео, аватар) файлдары үлкен әрі өзгермейді,
     # сол себепті оларға бұл ереже қолданылмайды.
     response = await call_next(request)
-    if not request.url.path.startswith(("/static/", "/media/", "/api/")):
+    if not request.url.path.startswith(("/static/", "/api/")):
         response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate"
     return response
 
@@ -96,6 +96,5 @@ def ask(payload: AskRequest):
     }
 
 
-app.mount("/media", StaticFiles(directory=BASE_DIR / "media"), name="media")
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
